@@ -3,93 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com; style-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com; connect-src 'self' https://cdn.tailwindcss.com">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com; style-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com; connect-src 'self' https://cdn.tailwindcss.com; img-src 'self' data:">
     <title>Full Screen Layout</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            -webkit-app-region: drag;
-        }
-        .no-drag {
-            -webkit-app-region: no-drag;
-        }
-        
-        .custom-scrollbar::-webkit-scrollbar {
-            width: 8px;
-        }
-        
-        .custom-scrollbar::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-        
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #c1c1c1;
-            border-radius: 4px;
-        }
-        
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: #a0a0a0;
-        }
-        
-        .content-area {
-            height: 0;
-            min-height: 0;
-            overflow-y: auto;
-        }
-
-        .resizer {
-            width: 5px;
-            height: 100%;
-            background-color: #e5e7eb;
-            cursor: col-resize;
-            transition: background-color 0.2s;
-        }
-
-        .resizer:hover, .resizing .resizer {
-            background-color: #3b82f6;
-        }
-
-        .resizing {
-            cursor: col-resize;
-            user-select: none;
-        }
-        
-        @media (max-width: 768px) {
-            .responsive-layout {
-                flex-direction: column;
-            }
-            
-            .sidebar {
-                width: 100% !important;
-                height: auto !important;
-                max-height: 200px;
-            }
-
-            .resizer {
-                display: none;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="assets/styles/sidebar.css">
+    <link rel="stylesheet" href="assets/styles/index.css">
 </head>
 <body class="h-full">
     <div class="flex h-screen responsive-layout" id="app-container">
         <!-- 사이드바 -->
-        <aside class="sidebar h-full bg-gray-800 flex-shrink-0 no-drag overflow-y-auto custom-scrollbar" id="sidebar">
-            <div class="p-4 text-white">
-                <h2 class="text-xl font-bold mb-4">사이드바</h2>
-                <nav>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="block py-2 px-4 rounded hover:bg-gray-700">메뉴 항목 1</a></li>
-                        <li><a href="#" class="block py-2 px-4 rounded hover:bg-gray-700">메뉴 항목 2</a></li>
-                        <li><a href="#" class="block py-2 px-4 rounded hover:bg-gray-700">메뉴 항목 3</a></li>
-                        <li><a href="#" class="block py-2 px-4 rounded hover:bg-gray-700">메뉴 항목 4</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </aside>
+        <div id="sidebar-container"></div>
 
         <!-- 리사이저 -->
         <div class="resizer no-drag" id="resizer"></div>
@@ -99,17 +22,17 @@
             <header class="h-[70px] bg-white border-b flex-shrink-0 flex items-center justify-between px-4">
                 <div class="text-lg font-semibold">애플리케이션 제목</div>
                 <div class="flex gap-2 no-drag">
-                    <button class="p-2 hover:bg-gray-100 rounded" onclick="window.electronAPI.minimize()">
+                    <button id="minimizeBtn" class="p-2 hover:bg-gray-100 rounded">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/>
                         </svg>
                     </button>
-                    <button class="p-2 hover:bg-gray-100 rounded" onclick="window.electronAPI.maximize()">
+                    <button id="maximizeBtn" class="p-2 hover:bg-gray-100 rounded">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 3v3a2 2 0 01-2 2H3m18 0h-3a2 2 0 01-2-2V3m0 18v-3a2 2 0 012-2h3M3 16h3a2 2 0 012 2v3"/>
                         </svg>
                     </button>
-                    <button class="p-2 hover:bg-red-100 rounded" onclick="window.electronAPI.close()">
+                    <button id="closeBtn" class="p-2 hover:bg-red-100 rounded">
                         <svg class="w-4 h-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                         </svg>
@@ -150,80 +73,173 @@
         </main>
     </div>
 
-    <script>
+    <!-- 디버깅 정보 -->
+    <div id="debug-info" style="display:none; position:fixed; bottom:10px; right:10px; background:rgba(0,0,0,0.7); color:white; padding:10px; border-radius:5px; z-index:9999;"></div>
+
+    <script type="module">
+        console.log('스크립트 시작');
+        
+        import { sidebar } from './components/sidebar.js';
+        
+        console.log('사이드바 모듈 임포트 완료:', sidebar);
+        
         document.addEventListener('DOMContentLoaded', () => {
-            // 사이드바 초기화
-            const sidebar = document.getElementById('sidebar');
-            const savedWidth = localStorage.getItem('sidebarWidth');
-            if (savedWidth) {
-                sidebar.style.width = `${savedWidth}px`;
-            } else {
-                sidebar.style.width = '256px';
-            }
+            console.log('DOM 로드 완료');
+            try {
+                // 사이드바 초기화
+                const sidebarContainer = document.getElementById('sidebar-container');
+                if (sidebarContainer) {
+                    sidebarContainer.innerHTML = sidebar.template;
+                    console.log('사이드바 템플릿 적용');
+                    sidebar.init();
+                    
+                    
+                } 
 
-            // 리사이저 초기화
-            const resizer = document.getElementById('resizer');
-            const appContainer = document.getElementById('app-container');
-            
-            let isResizing = false;
-
-            resizer.addEventListener('mousedown', (e) => {
-                isResizing = true;
-                document.body.classList.add('resizing');
-                e.preventDefault();
-            });
-
-            document.addEventListener('mousemove', (e) => {
-                if (!isResizing) return;
+                // 리사이저 초기화
+                const resizer = document.getElementById('resizer');
+                const appContainer = document.getElementById('app-container');
+                const sidebarElement = document.getElementById('sidebar');
                 
-                const newWidth = Math.min(
-                    Math.max(
-                        e.clientX - appContainer.offsetLeft,
-                        150
-                    ),
-                    appContainer.offsetWidth - 300
-                );
+                let isResizing = false;
+
+                resizer.addEventListener('mousedown', (e) => {
+                    isResizing = true;
+                    document.body.classList.add('resizing');
+                    e.preventDefault();
+                });
+
+                document.addEventListener('mousemove', (e) => {
+                    if (!isResizing) return;
+                    
+                    const newWidth = Math.min(
+                        Math.max(
+                            e.clientX - appContainer.offsetLeft,
+                            150
+                        ),
+                        appContainer.offsetWidth - 300
+                    );
+                    
+                    if (sidebarElement) {
+                        sidebarElement.style.width = `${newWidth}px`;
+                        localStorage.setItem('sidebarWidth', newWidth);
+                    }
+                });
+
+                document.addEventListener('mouseup', () => {
+                    if (isResizing) {
+                        isResizing = false;
+                        document.body.classList.remove('resizing');
+                    }
+                });
+
+                // 반복 컨텐츠 생성
+                const repeatedContent = document.getElementById('repeated-content');
+                if (repeatedContent) {
+                    let repeatedHtml = '';
+                    for (let i = 1; i <= 10; i++) {
+                        repeatedHtml += `
+                            <div class="mb-4 p-4 bg-gray-50 border rounded-md">
+                                <h3 class="font-semibold">섹션 ${i}</h3>
+                                <p>스크롤 테스트를 위한 컨텐츠입니다.</p>
+                            </div>
+                        `;
+                    }
+                    repeatedContent.innerHTML = repeatedHtml;
+                }
+
+                // 반응형 처리
+                function handleResize() {
+                    const isMobile = window.innerWidth <= 768;
+                    if (sidebarElement) {
+                        if (isMobile) {
+                            sidebarElement.style.width = '100%';
+                            sidebarElement.style.height = 'auto';
+                        } else {
+                            const width = localStorage.getItem('sidebarWidth') || '256';
+                            sidebarElement.style.width = `${width}px`;
+                            sidebarElement.style.height = '100%';
+                        }
+                    }
+                }
+
+                // 사이드바에만 contextmenu 이벤트 핸들러 추가
+                const sidebarEl = document.getElementById('sidebar');
+                if (sidebarEl) {
+                    // 사이드바에는 이미 자체 우클릭 메뉴가 있으므로 아무 작업 안함
+                }
+
+                // 개발자 도구 보기 메뉴 추가
+                document.addEventListener('contextmenu', (e) => {
+                    // 기본 컨텍스트 메뉴 방지
+                    e.preventDefault();
+                    
+                    // 컨텍스트 메뉴 요소 생성
+                    const contextMenu = document.createElement('div');
+                    contextMenu.className = 'fixed bg-gray-700 text-white rounded shadow-lg py-1 z-50';
+                    contextMenu.style.left = `${e.pageX}px`;
+                    contextMenu.style.top = `${e.pageY}px`;
+                    
+                    // 개발자 도구 버튼 추가
+                    const devToolsButton = document.createElement('button');
+                    devToolsButton.className = 'block w-full text-left px-4 py-2 hover:bg-gray-600';
+                    devToolsButton.textContent = '개발자 도구 보기';
+                    devToolsButton.addEventListener('click', () => {
+                        // Electron의 개발자 도구 호출
+                        if (window.electronAPI && window.electronAPI.openDevTools) {
+                            window.electronAPI.openDevTools();
+                        }
+                        contextMenu.remove();
+                    });
+                    
+                    contextMenu.appendChild(devToolsButton);
+                    document.body.appendChild(contextMenu);
+                    
+                    // 메뉴 외부 클릭 시 닫기
+                    const closeMenu = () => {
+                        contextMenu.remove();
+                        document.removeEventListener('click', closeMenu);
+                    };
+                    
+                    document.addEventListener('click', closeMenu);
+                });
                 
-                sidebar.style.width = `${newWidth}px`;
-                localStorage.setItem('sidebarWidth', newWidth);
-            });
+                // 상단 제어 버튼들 이벤트 핸들러 추가
+                const minimizeBtn = document.getElementById('minimizeBtn');
+                const maximizeBtn = document.getElementById('maximizeBtn');
+                const closeBtn = document.getElementById('closeBtn');
 
-            document.addEventListener('mouseup', () => {
-                if (isResizing) {
-                    isResizing = false;
-                    document.body.classList.remove('resizing');
+                if (minimizeBtn) {
+                    minimizeBtn.addEventListener('click', () => {
+                        if (window.electronAPI) {
+                            window.electronAPI.minimize();
+                        }
+                    });
                 }
-            });
 
-            // 반복 컨텐츠 생성
-            const repeatedContent = document.getElementById('repeated-content');
-            let repeatedHtml = '';
-            for (let i = 1; i <= 10; i++) {
-                repeatedHtml += `
-                    <div class="mb-4 p-4 bg-gray-50 border rounded-md">
-                        <h3 class="font-semibold">섹션 ${i}</h3>
-                        <p>스크롤 테스트를 위한 컨텐츠입니다.</p>
-                    </div>
-                `;
-            }
-            repeatedContent.innerHTML = repeatedHtml;
-
-            // 반응형 처리
-            function handleResize() {
-                const isMobile = window.innerWidth <= 768;
-                if (isMobile) {
-                    sidebar.style.width = '100%';
-                    sidebar.style.height = 'auto';
-                } else {
-                    const width = localStorage.getItem('sidebarWidth') || '256';
-                    sidebar.style.width = `${width}px`;
-                    sidebar.style.height = '100%';
+                if (maximizeBtn) {
+                    maximizeBtn.addEventListener('click', () => {
+                        if (window.electronAPI) {
+                            window.electronAPI.maximize();
+                        }
+                    });
                 }
+
+                if (closeBtn) {
+                    closeBtn.addEventListener('click', () => {
+                        if (window.electronAPI) {
+                            window.electronAPI.close();
+                        }
+                    });
+                }
+                
+                handleResize();
+                window.addEventListener('resize', handleResize);
+            } catch (error) {
+                console.error('오류 발생:', error);
             }
-            
-            handleResize();
-            window.addEventListener('resize', handleResize);
         });
+
     </script>
 </body>
 </html>
