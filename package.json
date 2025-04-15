@@ -1,0 +1,19 @@
+{
+  "name": "full-screen-app",
+  "version": "1.0.0",
+  "description": "Full Screen Desktop Application",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "NODE_ENV=development electron .",
+    "prod": "NODE_ENV=production electron .",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "convert-icon": "sharp -i icon.svg -o icon.png resize 32 32"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^29.1.0",
+    "sharp-cli": "^4.1.1"
+  }
+} 

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ko" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com; style-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com; connect-src 'self' https://cdn.tailwindcss.com">
+    <title>Full Screen Layout</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            -webkit-app-region: drag;
+        }
+        .no-drag {
+            -webkit-app-region: no-drag;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 4px;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #a0a0a0;
+        }
+        
+        .content-area {
+            height: 0;
+            min-height: 0;
+            overflow-y: auto;
+        }
+
+        .resizer {
+            width: 5px;
+            height: 100%;
+            background-color: #e5e7eb;
+            cursor: col-resize;
+            transition: background-color 0.2s;
+        }
+
+        .resizer:hover, .resizing .resizer {
+            background-color: #3b82f6;
+        }
+
+        .resizing {
+            cursor: col-resize;
+            user-select: none;
+        }
+        
+        @media (max-width: 768px) {
+            .responsive-layout {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100% !important;
+                height: auto !important;
+                max-height: 200px;
+            }
+
+            .resizer {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body class="h-full">
+    <div class="flex h-screen responsive-layout" id="app-container">
+        <!-- 사이드바 -->
+        <aside class="sidebar h-full bg-gray-800 flex-shrink-0 no-drag overflow-y-auto custom-scrollbar" id="sidebar">
+            <div class="p-4 text-white">
+                <h2 class="text-xl font-bold mb-4">사이드바</h2>
+                <nav>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="block py-2 px-4 rounded hover:bg-gray-700">메뉴 항목 1</a></li>
+                        <li><a href="#" class="block py-2 px-4 rounded hover:bg-gray-700">메뉴 항목 2</a></li>
+                        <li><a href="#" class="block py-2 px-4 rounded hover:bg-gray-700">메뉴 항목 3</a></li>
+                        <li><a href="#" class="block py-2 px-4 rounded hover:bg-gray-700">메뉴 항목 4</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- 리사이저 -->
+        <div class="resizer no-drag" id="resizer"></div>
+
+        <!-- 메인 컨텐츠 -->
+        <main class="flex-1 flex flex-col overflow-hidden">
+            <header class="h-[70px] bg-white border-b flex-shrink-0 flex items-center justify-between px-4">
+                <div class="text-lg font-semibold">애플리케이션 제목</div>
+                <div class="flex gap-2 no-drag">
+                    <button class="p-2 hover:bg-gray-100 rounded" onclick="window.electronAPI.minimize()">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/>
+                        </svg>
+                    </button>
+                    <button class="p-2 hover:bg-gray-100 rounded" onclick="window.electronAPI.maximize()">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 3v3a2 2 0 01-2 2H3m18 0h-3a2 2 0 01-2-2V3m0 18v-3a2 2 0 012-2h3M3 16h3a2 2 0 012 2v3"/>
+                        </svg>
+                    </button>
+                    <button class="p-2 hover:bg-red-100 rounded" onclick="window.electronAPI.close()">
+                        <svg class="w-4 h-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+            </header>
+
+            <div class="flex-1 flex flex-col no-drag overflow-hidden">
+                <div class="h-[44px] bg-gray-200 flex-shrink-0 flex items-center px-4 border-b">
+                    <span class="text-sm font-medium text-gray-700">에디터 영역</span>
+                </div>
+                
+                <div class="flex-1 content-area custom-scrollbar p-4 bg-white" id="content-area">
+                    <div class="space-y-6">
+                        <h2 class="text-2xl font-bold">컨텐츠 영역</h2>
+                        <p>이 영역은 수직 스크롤링이 가능합니다.</p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="p-4 bg-gray-100 rounded-md">
+                                <h3 class="font-semibold mb-2">항목 1</h3>
+                                <p>샘플 컨텐츠입니다.</p>
+                            </div>
+                            <div class="p-4 bg-gray-100 rounded-md">
+                                <h3 class="font-semibold mb-2">항목 2</h3>
+                                <p>샘플 컨텐츠입니다.</p>
+                            </div>
+                        </div>
+                        
+                        <div id="repeated-content"></div>
+                    </div>
+                </div>
+            </div>
+
+            <footer class="h-[60px] bg-white border-t flex-shrink-0 no-drag flex items-center justify-between px-4">
+                <div class="text-sm text-gray-500">상태 정보</div>
+                <div class="text-sm text-gray-500">© 2025 Full Screen App</div>
+            </footer>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 사이드바 초기화
+            const sidebar = document.getElementById('sidebar');
+            const savedWidth = localStorage.getItem('sidebarWidth');
+            if (savedWidth) {
+                sidebar.style.width = `${savedWidth}px`;
+            } else {
+                sidebar.style.width = '256px';
+            }
+
+            // 리사이저 초기화
+            const resizer = document.getElementById('resizer');
+            const appContainer = document.getElementById('app-container');
+            
+            let isResizing = false;
+
+            resizer.addEventListener('mousedown', (e) => {
+                isResizing = true;
+                document.body.classList.add('resizing');
+                e.preventDefault();
+            });
+
+            document.addEventListener('mousemove', (e) => {
+                if (!isResizing) return;
+                
+                const newWidth = Math.min(
+                    Math.max(
+                        e.clientX - appContainer.offsetLeft,
+                        150
+                    ),
+                    appContainer.offsetWidth - 300
+                );
+                
+                sidebar.style.width = `${newWidth}px`;
+                localStorage.setItem('sidebarWidth', newWidth);
+            });
+
+            document.addEventListener('mouseup', () => {
+                if (isResizing) {
+                    isResizing = false;
+                    document.body.classList.remove('resizing');
+                }
+            });
+
+            // 반복 컨텐츠 생성
+            const repeatedContent = document.getElementById('repeated-content');
+            let repeatedHtml = '';
+            for (let i = 1; i <= 10; i++) {
+                repeatedHtml += `
+                    <div class="mb-4 p-4 bg-gray-50 border rounded-md">
+                        <h3 class="font-semibold">섹션 ${i}</h3>
+                        <p>스크롤 테스트를 위한 컨텐츠입니다.</p>
+                    </div>
+                `;
+            }
+            repeatedContent.innerHTML = repeatedHtml;
+
+            // 반응형 처리
+            function handleResize() {
+                const isMobile = window.innerWidth <= 768;
+                if (isMobile) {
+                    sidebar.style.width = '100%';
+                    sidebar.style.height = 'auto';
+                } else {
+                    const width = localStorage.getItem('sidebarWidth') || '256';
+                    sidebar.style.width = `${width}px`;
+                    sidebar.style.height = '100%';
+                }
+            }
+            
+            handleResize();
+            window.addEventListener('resize', handleResize);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+# 의존성 디렉토리
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# 빌드 출력
+dist/
+out/
+build/
+
+# Electron
+*.exe
+*.app
+*.dmg
+
+# OS
+.DS_Store
+Thumbs.db
+
+# 환경 파일
+.env*
+
+# 빌드 출력
+dist/
+build/
+out/
+
+# macOS 시스템 파일
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows 시스템 파일
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux 시스템 파일
+*~
+.directory
+
+# IDE 및 편집기 파일
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# 로그 파일
+logs/
+*.log
+
+# 환경 변수 파일
+.env
+.env.local
+.env.*.local
+
+# Electron 관련
+.electron-builder.env 
+
+
+# OS 설정 파일
+*.bak
+*.tmp
+
+# 에디터 자동 저장 파일
+*.autosave
+
+# React / Next.js 관련 출력
+.next/
+.cache/
+
+# Typescript
+*.tsbuildinfo
+
+# 기타 빌드 시스템
+coverage/
+.eslintcache
