@@ -4,18 +4,35 @@
 
 @layer components {
     .tree-item {
-        @apply flex items-center py-2 px-2 rounded cursor-pointer hover:bg-gray-700 w-full;
+        @apply flex items-center rounded cursor-pointer w-full;
         display: flex;
         align-items: center;
         flex-direction: row;
+        color: var(--tree-item-text);
+        padding: 3px 4px; /* 더 작은 간격으로 조정 */
+    }
+
+    .tree-item:hover {
+        background-color: var(--tree-item-hover);
     }
 
     .tree-item .toggle {
-        @apply transition-transform duration-200 flex-shrink-0 w-4 h-4;
-        width: 16px;
+        @apply transition-transform duration-200 flex-shrink-0;
+        width: 24px;
+        height: 24px;
         display: inline-flex;
         align-items: center;
         justify-content: center;
+        border-radius: 4px;
+        background-color: var(--tree-toggle-bg);
+    }
+
+    .tree-item .toggle:hover {
+        background-color: var(--tree-toggle-hover-bg);
+    }
+
+    .tree-item .toggle svg {
+        color: var(--tree-toggle-icon);
     }
 
     .tree-item .toggle.rotate-90 {
@@ -43,37 +60,41 @@
     }
 
     .tree-item.file {
-        @apply text-gray-300;
+        color: var(--tree-item-text);
     }
 
     .children {
-        @apply mt-1 space-y-1 border-l border-gray-600;
+        @apply space-y-1; /* 자식 요소 간격 축소 */
+        border-left: 1px solid var(--sidebar-tree-border);
         margin-left: 5px;
         padding-left: 5px;
+        margin-top: 3px; /* 더 작은 간격으로 조정 */
+        margin-bottom: 3px;
     }
 
     /* GitBook 스타일의 하위 메뉴 */
     .children .tree-item {
-        @apply text-sm py-1.5;
+        @apply text-sm;
+        padding: 3px; /* 더 작은 간격으로 조정 */
     }
 
     /* 메뉴 항목 호버 효과 */
     .tree-item:hover .name {
-        @apply text-white;
+        color: var(--sidebar-text);
     }
 
     /* 활성화된 메뉴 항목 */
     .tree-item.active {
-        @apply bg-gray-700;
+        background-color: var(--tree-item-active);
     }
     
     .tree-item.active .name {
-        @apply text-white;
+        color: var(--sidebar-text);
     }
 
     .custom-scrollbar {
         scrollbar-width: thin;
-        scrollbar-color: #4B5563 #1F2937;
+        scrollbar-color: var(--border-color-light) var(--sidebar-bg);
     }
 
     .custom-scrollbar::-webkit-scrollbar {
@@ -81,15 +102,43 @@
     }
 
     .custom-scrollbar::-webkit-scrollbar-track {
-        background: #1F2937;
+        background: var(--sidebar-bg);
     }
 
     .custom-scrollbar::-webkit-scrollbar-thumb {
-        background-color: #4B5563;
+        background-color: var(--border-color-light);
         border-radius: 4px;
     }
 
     .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-        background-color: #6B7280;
+        background-color: var(--border-color);
     }
+}
+
+#search-input {
+    background-color: var(--search-bg);
+    color: var(--search-text);
+    border: 1px solid var(--search-border);
+}
+
+#search-input::placeholder {
+    color: var(--search-placeholder);
+}
+
+/* 사이드바 하단 설정 영역 */
+.sidebar .border-t {
+    border-color: var(--border-color);
+}
+
+/* 사이드바 토글 버튼 스타일 */
+#sidebar-toggle-btn, #show-sidebar-btn {
+    background-color: var(--sidebar-toggle-bg);
+}
+
+#sidebar-toggle-btn:hover, #show-sidebar-btn:hover {
+    background-color: var(--sidebar-toggle-hover-bg);
+}
+
+#sidebar-toggle-btn svg, #show-sidebar-btn svg {
+    color: var(--sidebar-toggle-icon);
 } 

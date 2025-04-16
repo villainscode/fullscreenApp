@@ -610,7 +610,7 @@ function toggleSidebar(hide) {
 // 사이드바 템플릿
 const sidebarTemplate = `
     <div class="sidebar-wrapper relative">
-        <aside class="sidebar h-full bg-gray-800 flex-shrink-0 no-drag overflow-y-auto custom-scrollbar flex flex-col transition-all duration-300 ease-in-out" id="sidebar">
+        <aside class="sidebar h-full flex-shrink-0 no-drag overflow-y-auto custom-scrollbar flex flex-col transition-all duration-300 ease-in-out" id="sidebar" style="background-color: #2b2d30;">
             <div class="p-4 text-white flex-grow">
                 <!-- 검색 영역 -->
                 <div class="relative mb-4">
@@ -621,7 +621,7 @@ const sidebarTemplate = `
                             </svg>
                         </div>
                     </div>
-                    <input type="text" id="search-input" class="bg-gray-700 text-white w-full pl-10 pr-4 py-2 rounded text-sm focus:outline-none focus:ring-2 focus:ring-white ring-2 ring-white appearance-none" placeholder="검색어를 입력하세요">
+                    <input type="text" id="search-input" class="w-full pl-10 pr-4 py-2 rounded text-sm focus:outline-none focus:ring-2 focus:ring-white appearance-none" placeholder="검색어를 입력하세요">
                 </div>
                 
                 <!-- 폴더 섹션 -->
@@ -640,14 +640,14 @@ const sidebarTemplate = `
             </div>
             
             <!-- 하단 설정 영역 -->
-            <div class="p-4 border-t border-gray-700 relative flex justify-between items-center">
+            <div class="p-3 border-t border-gray-700 relative flex justify-between items-center">
                 <!-- 설정 컴포넌트가 여기에 추가됩니다 -->
                 <div id="settings-container" class="flex-1"></div>
                 
                 <!-- 사이드바 토글 버튼 추가 -->
                 <button id="sidebar-toggle-btn" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-700 transition-colors">
-                    <svg class="w-5 h-5 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 19l-7-7 7-7m8 14l-7-7 7-7"></path>
+                    <svg class="w-5 h-5" style="color: var(--sidebar-toggle-icon);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path>
                     </svg>
                 </button>
             </div>
@@ -656,8 +656,8 @@ const sidebarTemplate = `
     
     <!-- 사이드바 보이기 버튼 - 화면 하단에 고정 -->
     <div id="sidebar-toggle-container" class="fixed left-[15px] bottom-[15px] z-50 transition-all duration-300 ease-in-out">
-        <button id="show-sidebar-btn" class="bg-gray-800 text-white rounded-full w-6 h-6 flex items-center justify-center shadow-lg hover:bg-gray-700 transition-colors hidden">
-            <svg class="w-3.5 h-3.5 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <button id="show-sidebar-btn" class="text-white rounded-full w-8 h-8 flex items-center justify-center shadow-lg hover:bg-gray-700 transition-colors hidden" style="background-color: var(--sidebar-toggle-bg);">
+            <svg class="w-5 h-5" style="color: var(--sidebar-toggle-icon);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path>
             </svg>
         </button>

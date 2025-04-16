@@ -1,0 +1,69 @@
+:root {
+    /* 사이드바 기본 테마 */
+    --sidebar-bg: #2b2d30;
+    --sidebar-text: #ffffff;
+    --sidebar-border: #1e1f22;
+    --sidebar-tree-border: #4b5563;
+    
+    /* 사이드바 토글 버튼 테마 */
+    --sidebar-toggle-bg: #43454a;
+    --sidebar-toggle-hover-bg: #4f5157;
+    --sidebar-toggle-icon: #dfe1e5;
+
+    /* 트리 메뉴 토글 테마 */
+    --tree-toggle-bg: #383b3d;
+    --tree-toggle-hover-bg: #404244;
+    --tree-toggle-icon: #dfe1e5;
+
+    /* 트리 메뉴 테마 */
+    --tree-item-hover: #383b3d;
+    --tree-item-active: #383b3d;
+    --tree-item-text: #dfe1e5;
+    --tree-item-icon: #dfe1e5;
+    
+    /* 폴더 아이콘 컬러 */
+    --folder-icon: #eef0f3;
+    --folder-icon-open: #eef0f3;
+    --file-icon: #eef0f3;
+    
+    /* 설정 메뉴 테마 */
+    --settings-menu-bg: #43454a;
+    --settings-menu-border: #d7d7d7;
+    --settings-btn-bg: #3b82f6;
+    --settings-btn-hover: #2563eb;
+    
+    /* 검색 영역 테마 */
+    --search-bg: #1e1f22;
+    --search-text: #ffffff;
+    --search-border: #1e1f22;
+    --search-placeholder: #7a7e85;
+    
+    /* 구분선 테마 */
+    --border-color: #1e1f22;
+    --border-color-light: #374151;
+    
+    /* 메인 컨텐츠 영역 테마 */
+    --content-header-bg: #2b2d30;
+    --content-header-border: var(--border-color);
+    --content-header-text: #ffffff;
+    
+    /* 에디터 영역 */
+    --editor-header-bg: #6b6b6b;
+    --editor-header-text: #f4f4f4;
+    --editor-header-border: var(--border-color);
+    
+    /* 컨텐츠 영역 */
+    --content-bg: #2b2b2b;
+    --content-text: #ffffff;
+    --content-card-bg: #383b3d;
+    --content-card-alt-bg: #43454a;
+    
+    /* 푸터 영역 */
+    --footer-bg: #2b2b2b;
+    --footer-text: #ffffff;
+    --footer-border: var(--border-color);
+    
+    /* 리사이저 */
+    --resizer-bg: #1e1f22;
+    --resizer-hover-bg: #3b82f6;
+} 

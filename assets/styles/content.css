@@ -1,0 +1,35 @@
+/* 메인 컨텐츠 영역 스타일 */
+.content-header {
+    background-color: var(--content-header-bg);
+    border-bottom: 1px solid var(--content-header-border);
+    color: var(--content-header-text);
+}
+
+.editor-header {
+    background-color: var(--editor-header-bg);
+    border-bottom: 1px solid var(--editor-header-border);
+    color: var(--editor-header-text);
+}
+
+.main-content {
+    background-color: var(--content-bg);
+    color: var(--content-text);
+}
+
+.content-card {
+    background-color: var(--content-card-bg);
+    color: var(--content-text);
+    border: 1px solid var(--border-color);
+}
+
+.content-card-alt {
+    background-color: var(--content-card-alt-bg);
+    border: 1px solid var(--border-color);
+    color: var(--content-text);
+}
+
+.content-footer {
+    background-color: var(--footer-bg);
+    border-top: 1px solid var(--footer-border);
+    color: var(--footer-text);
+} 

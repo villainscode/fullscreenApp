@@ -32,15 +32,15 @@ body {
 }
 
 .resizer {
-    width: 5px;
+    width: 1px;
     height: 100%;
-    background-color: #e5e7eb;
+    background-color: var(--resizer-bg);
     cursor: col-resize;
     transition: background-color 0.2s;
 }
 
 .resizer:hover, .resizing .resizer {
-    background-color: #3b82f6;
+    background-color: var(--resizer-hover-bg);
 }
 
 .resizing {

@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('theme.css');
+
 @layer components {
     /* 설정 메뉴 레이어 스타일 */
     #settings-menu {
@@ -15,7 +17,8 @@
         position: absolute;
         bottom: 29px;
         left: 4px;
-        background-color: #374151;
+        background-color: var(--settings-menu-bg);
+        border: 1px solid var(--settings-menu-border);
         border-radius: 0.375rem;
         box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         padding: 1rem;
@@ -24,7 +27,7 @@
         z-index: 100;
         transition: opacity 0.3s ease-in-out;
         will-change: opacity;
-        color: white;
+        color: var(--sidebar-text);
     }
 
     /* 설정 버튼 스타일 */
@@ -38,13 +41,12 @@
         transition-property: background-color, border-color, color, fill, stroke;
         transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
         transition-duration: 150ms;
-        color: white;
-        background-color: rgba(59, 130, 246, 0.8);
+        color: var(--sidebar-text);
+        background-color: var(--settings-btn-bg);
     }
     
     .settings-btn:hover {
-        background-color: rgba(37, 99, 235, 1);
-        color: white;
+        background-color: var(--settings-btn-hover);
     }
 
     /* 설정 메뉴 제목 스타일 */
@@ -81,21 +83,33 @@
         align-items: center;
         justify-content: center;
         border-radius: 0.375rem;
-        background-color: rgba(75, 85, 99, 1);
-        color: rgba(209, 213, 219, 0.7);
-        transition: all 0.2s;
+        background-color: #4b5563;
+        color: #d1d5db;
+        transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
         border: none;
         cursor: pointer;
+        transform: translateY(0) scale(1);
     }
     
     .theme-icon-btn:hover {
-        background-color: rgba(107, 114, 128, 1);
+        background-color: #6b7280;
         color: white;
+        transform: translateY(-1px) scale(1.05);
+    }
+    
+    .theme-icon-btn:active {
+        transform: translateY(1px) scale(0.95);
     }
     
     .theme-icon-btn.active {
-        background-color: rgba(59, 130, 246, 0.8);
+        background-color: var(--settings-btn-bg);
         color: white;
+        box-shadow: 0 0 0 2px var(--settings-btn-bg);
+    }
+
+    .theme-icon-btn.active:hover {
+        background-color: var(--settings-btn-hover);
+        box-shadow: 0 0 0 2px var(--settings-btn-hover);
     }
 
     /* 글꼴 크기 섹션 스타일 */
@@ -167,5 +181,50 @@
     /* 설정 버튼 내부의 SVG 아이콘에 대한 특별 스타일 */
     .settings-btn .settings-svg-icon {
         stroke: white;
+    }
+
+    /* 트리 메뉴 스타일 */
+    .tree-item {
+        color: var(--tree-item-text);
+    }
+
+    .tree-item:hover {
+        background-color: var(--tree-item-hover);
+    }
+
+    .tree-item.active {
+        background-color: var(--tree-item-active);
+    }
+
+    .tree-item .icon svg {
+        stroke: var(--tree-item-icon);
+    }
+
+    .tree-item.folder .icon svg {
+        stroke: var(--folder-icon);
+    }
+
+    .tree-item.folder.open .icon svg {
+        stroke: var(--folder-icon-open);
+    }
+
+    .tree-item.file .icon svg {
+        stroke: var(--file-icon);
+    }
+
+    /* 검색 입력창 스타일 */
+    #search-input {
+        background-color: var(--search-bg);
+        color: var(--search-text);
+        border: 1px solid var(--search-border);
+    }
+
+    #search-input::placeholder {
+        color: var(--search-placeholder);
+    }
+
+    /* 구분선 스타일 */
+    .border-t {
+        border-color: var(--divider-color);
     }
 } 

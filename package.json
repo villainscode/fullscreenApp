@@ -13,8 +13,11 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "autoprefixer": "^10.4.21",
     "electron": "^29.1.0",
     "electron-debug": "^4.1.0",
-    "sharp-cli": "^4.1.1"
+    "postcss": "^8.5.3",
+    "sharp-cli": "^4.1.1",
+    "tailwindcss": "^4.1.4"
   }
 }
