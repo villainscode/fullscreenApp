@@ -68,6 +68,37 @@ export const styles = {
                     display: none;
                 }
             }
+
+            .sidebar {
+                transition: transform 0.3s ease-in-out, width 0.3s ease-in-out;
+            }
+
+            .sidebar-hidden {
+                width: 0 !important;
+                padding: 0;
+                overflow: hidden;
+                opacity: 0;
+            }
+
+            .sidebar-container {
+                transition: width 0.3s ease-in-out;
+            }
+
+            .sidebar-visible {
+                width: auto;
+            }
+
+            #show-sidebar-btn {
+                transition: opacity 0.3s ease-in-out;
+            }
+
+            #sidebar-container.w-10 .sidebar {
+                display: none;
+            }
+
+            #sidebar-container.w-10 #show-sidebar-btn {
+                display: flex;
+            }
         `;
         document.head.appendChild(styleElement);
     }

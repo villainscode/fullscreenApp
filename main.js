@@ -1,5 +1,11 @@
 const { app, BrowserWindow, ipcMain, Tray, Menu, nativeImage } = require('electron');
 const path = require('path');
+// electron-debug 모듈 추가 (개발자 도구 쉽게 열기 가능)
+// ESM 모듈을 불러오기 위해 동적 import 사용
+(async () => {
+  const electronDebug = await import('electron-debug');
+  electronDebug.default({ showDevTools: false });
+})();
 
 /**
  * 윈도우 컨트롤 명령 상수
@@ -101,6 +107,13 @@ class WindowManager {
                 this.mainWindow.close();
             } else {
                 app.quit();
+            }
+        });
+
+        // 개발자 도구 열기 이벤트 핸들러
+        ipcMain.on('open-devtools', () => {
+            if (this.mainWindow) {
+                this.mainWindow.webContents.openDevTools();
             }
         });
     }
