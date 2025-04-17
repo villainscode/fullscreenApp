@@ -43,12 +43,12 @@
     --border-color-light: #374151;
     
     /* 메인 컨텐츠 영역 테마 */
-    --content-header-bg: #1e1f22;
+    --content-header-bg: #43454a;
     --content-header-border: var(--border-color);
     --content-header-text: #ffffff;
     
     /* 에디터 영역 */
-    --editor-header-bg: #f4f4f4;
+    --editor-header-bg: #fffff;
     --editor-header-text: #6b6b6b;
     --editor-header-border: var(--border-color);
     
@@ -59,7 +59,7 @@
     --content-card-alt-bg: #cacccd;
     
     /* 푸터 영역 */
-    --footer-bg: #2a2d30;
+    --footer-bg: #43454a;
     --footer-text: #ffffff;
     --footer-border: var(--border-color);
     
