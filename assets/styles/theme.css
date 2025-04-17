@@ -11,7 +11,7 @@
     --sidebar-toggle-icon: #dfe1e5;
 
     /* 트리 메뉴 토글 테마 */
-    --tree-toggle-bg: #383b3d;
+    --tree-toggle-bg: #404244;
     --tree-toggle-hover-bg: #404244;
     --tree-toggle-icon: #dfe1e5;
 
@@ -43,23 +43,23 @@
     --border-color-light: #374151;
     
     /* 메인 컨텐츠 영역 테마 */
-    --content-header-bg: #2b2d30;
+    --content-header-bg: #1e1f22;
     --content-header-border: var(--border-color);
     --content-header-text: #ffffff;
     
     /* 에디터 영역 */
-    --editor-header-bg: #6b6b6b;
-    --editor-header-text: #f4f4f4;
+    --editor-header-bg: #f4f4f4;
+    --editor-header-text: #6b6b6b;
     --editor-header-border: var(--border-color);
     
     /* 컨텐츠 영역 */
-    --content-bg: #2b2b2b;
-    --content-text: #ffffff;
-    --content-card-bg: #383b3d;
-    --content-card-alt-bg: #43454a;
+    --content-bg: #ffffff;
+    --content-text: #2b2b2b;
+    --content-card-bg: #f4f4f4;
+    --content-card-alt-bg: #cacccd;
     
     /* 푸터 영역 */
-    --footer-bg: #2b2b2b;
+    --footer-bg: #2a2d30;
     --footer-text: #ffffff;
     --footer-border: var(--border-color);
     
